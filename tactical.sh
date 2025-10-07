@@ -1,41 +1,40 @@
+# Yeni bir dosya oluştur (temiz Unix formatında)
+cat > tactical_clean.sh << 'SCRIPT_END'
 #!/bin/bash
-
-# Tactical RMM Agent Installer for macOS
-# Supports: Armut & Pronto Pro
 
 clear
 echo "=== Tactical RMM Agent Kurulum ==="
 echo "=== Tactical RMM Agent Installation ==="
 echo ""
 
-echo "Dil seçiniz / Select Language:"
-echo "1) Türkçe"
+echo "Dil seciniz / Select Language:"
+echo "1) Turkce"
 echo "2) English"
 echo ""
 
-read -p "Seçiminiz / Your choice (1-2): " LANG_CHOICE
+read -p "Seciminiz / Your choice (1-2): " LANG_CHOICE
 
 case $LANG_CHOICE in
     1)
-        echo "Türkçe seçildi"
+        echo "Turkce secildi"
         echo ""
-        echo "Şirket seçiniz:"
+        echo "Sirket seciniz:"
         echo "1) Armut"
         echo "2) Pronto Pro"
         echo ""
-        read -p "Şirket (1-2): " COMPANY_CHOICE
+        read -p "Sirket (1-2): " COMPANY_CHOICE
         ;;
     2)
         echo "English selected"
         echo ""
         echo "Select company:"
-        echo "1) Armut"
+        echo "1) Armut" 
         echo "2) Pronto Pro"
         echo ""
         read -p "Company (1-2): " COMPANY_CHOICE
         ;;
     *)
-        echo "Invalid choice / Geçersiz seçim"
+        echo "Invalid choice / Gecersiz secim"
         exit 1
         ;;
 esac
@@ -43,7 +42,7 @@ esac
 case $COMPANY_CHOICE in
     1)
         if [ "$LANG_CHOICE" = "1" ]; then
-            echo "Armut seçildi"
+            echo "Armut secildi"
         else
             echo "Armut selected"
         fi
@@ -54,7 +53,7 @@ case $COMPANY_CHOICE in
         ;;
     2)
         if [ "$LANG_CHOICE" = "1" ]; then
-            echo "Pronto Pro seçildi"
+            echo "Pronto Pro secildi"
         else
             echo "Pronto Pro selected"
         fi
@@ -64,14 +63,14 @@ case $COMPANY_CHOICE in
         COMPANY_NAME="Pronto Pro"
         ;;
     *)
-        echo "Invalid choice / Geçersiz seçim"
+        echo "Invalid choice / Gecersiz secim"
         exit 1
         ;;
 esac
 
 if [[ "$OSTYPE" != "darwin"* ]]; then
     if [ "$LANG_CHOICE" = "1" ]; then
-        echo "Bu script sadece macOS için!"
+        echo "Bu script sadece macOS icin!"
     else
         echo "This script is for macOS only!"
     fi
@@ -97,7 +96,7 @@ fi
 
 echo ""
 if [ "$LANG_CHOICE" = "1" ]; then
-    echo "$COMPANY_NAME için agent indiriliyor..."
+    echo "$COMPANY_NAME icin agent indiriliyor..."
 else
     echo "Downloading agent for $COMPANY_NAME..."
 fi
@@ -107,13 +106,13 @@ DOWNLOAD_URL="https://agents.tacticalrmm.com/api/v2/agents/?version=2.9.1&arch=$
 
 if curl -L -s -o "$AGENT_FILE" "$DOWNLOAD_URL"; then
     if [ "$LANG_CHOICE" = "1" ]; then
-        echo "İndirme tamamlandı"
+        echo "Indirme tamamlandi"
     else
         echo "Download completed"
     fi
 else
     if [ "$LANG_CHOICE" = "1" ]; then
-        echo "İndirme başarısız!"
+        echo "Indirme basarisiz!"
     else
         echo "Download failed!"
     fi
@@ -125,7 +124,7 @@ chmod +x "$AGENT_FILE"
 echo ""
 if [ "$LANG_CHOICE" = "1" ]; then
     echo "Agent kuruluyor..."
-    echo "Şifre gerekebilir..."
+    echo "Sifre gerekebilir..."
 else
     echo "Installing agent..."
     echo "Password may be required..."
@@ -134,7 +133,7 @@ fi
 if sudo ./"$AGENT_FILE" -m install --api https://api.trmm.homeruntech.io --client-id $CLIENT_ID --site-id $SITE_ID --agent-type workstation --auth $AUTH_TOKEN; then
     echo ""
     if [ "$LANG_CHOICE" = "1" ]; then
-        echo "BAŞARILI! $COMPANY_NAME agent kuruldu."
+        echo "BASARILI! $COMPANY_NAME agent kuruldu."
         echo "Client ID: $CLIENT_ID"
         echo "Site ID: $SITE_ID"
         echo "Mimari: $ARCH"
@@ -147,7 +146,7 @@ if sudo ./"$AGENT_FILE" -m install --api https://api.trmm.homeruntech.io --clien
 else
     echo ""
     if [ "$LANG_CHOICE" = "1" ]; then
-        echo "HATA! Kurulum başarısız."
+        echo "HATA! Kurulum basarisiz."
     else
         echo "ERROR! Installation failed."
     fi
@@ -158,7 +157,14 @@ rm -f "$AGENT_FILE"
 
 echo ""
 if [ "$LANG_CHOICE" = "1" ]; then
-    echo "Kurulum tamamlandı!"
+    echo "Kurulum tamamlandi!"
 else
     echo "Installation completed!"
 fi
+SCRIPT_END
+
+# Dosyayı test et
+chmod +x tactical_clean.sh
+./tactical_clean.sh
+
+# Dosya çalışıyorsa GitHub'a yükle
